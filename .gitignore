@@ -1,0 +1,12 @@
+**/.settings
+**/target
+**/.project
+**/.classpath
+**/bin
+**/.tern-project
+# Intellj
+*.iml
+.idea/
+# Docker
+docker/jboss-as7/deploy/*
+!docker/jboss-as7/deploy/.gitkeep
