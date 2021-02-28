@@ -1,5 +1,7 @@
 package br.com.estudospring.clientes.rest;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -29,36 +31,33 @@ public class ClienteController {
 
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public Cliente salvar(@RequestBody Cliente cliente) {
+	public Cliente salvar(@RequestBody @Valid Cliente cliente) {
 		return repository.save(cliente);
 	}
 
 	@GetMapping("{codigo}")
 	public Cliente buscarPorId(@PathVariable("codigo") Integer id) {
-		return repository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+		return repository.findById(id)
+				.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cliente não encontrado"));
 	}
-	
+
 	@DeleteMapping("{id}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public Class<Void> deletar(@PathVariable Integer id) {
-		return repository.findById(id)
-				.map(cliente -> {
-					repository.delete(cliente);
-					return Void.TYPE;
-				})
-				.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+		return repository.findById(id).map(cliente -> {
+			repository.delete(cliente);
+			return Void.TYPE;
+		}).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cliente não encontrado"));
 	}
-	
+
 	@PutMapping("{id}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public Class<Void> altualizar(@PathVariable Integer id, @RequestBody Cliente clienteAtualizado) {
-		return repository.findById(id)
-				.map(cliente -> {
-					cliente.setId(clienteAtualizado.getId());
-					cliente.setCpf(clienteAtualizado.getCpf());
-					repository.save(clienteAtualizado);
-					return Void.TYPE;
-				})
-				.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+		return repository.findById(id).map(cliente -> {
+			cliente.setId(clienteAtualizado.getId());
+			cliente.setCpf(clienteAtualizado.getCpf());
+			repository.save(clienteAtualizado);
+			return Void.TYPE;
+		}).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cliente não encontrado"));
 	}
 }
