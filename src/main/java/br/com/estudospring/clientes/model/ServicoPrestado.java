@@ -1,6 +1,7 @@
 package br.com.estudospring.clientes.model;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,31 +11,30 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-public class Servico {
+@Getter @Setter
+public class ServicoPrestado {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Getter
-	@Setter
 	private Integer id;
 	
 	@Column(nullable = false, length = 150)
-	@Getter
-	@Setter
 	private String descricao;
 	
 	@Column
-	@Getter
-	@Setter
 	private BigDecimal valor;
 	
 	@ManyToOne
 	@JoinColumn(name = "id_cliente")
-	@Getter
-	@Setter
 	private Cliente cliente;
+	
+	@Column
+	@JsonFormat(pattern = "dd/MM/yyyy")
+	private LocalDate data;
 }
