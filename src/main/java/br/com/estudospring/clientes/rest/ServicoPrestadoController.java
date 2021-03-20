@@ -31,7 +31,6 @@ import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("/api/servicos-prestados")
-@CrossOrigin("http://localhost:4200")
 //@RequiredArgsConstructor - cria um construtor com os atributos obrigatorios
 public class ServicoPrestadoController {
 
@@ -57,7 +56,7 @@ public class ServicoPrestadoController {
 
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public ServicoPrestado salvar(@RequestBody ServicoPrestadoDTO dto) {
+	public ServicoPrestado salvar(@RequestBody @Valid ServicoPrestadoDTO dto) {
 		LocalDate data = LocalDate.parse(dto.getData(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
 		
 		Cliente cliente = clienteRepository.
