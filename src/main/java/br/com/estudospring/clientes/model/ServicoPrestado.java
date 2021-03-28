@@ -28,7 +28,7 @@ public class ServicoPrestado {
 	private String descricao;
 	
 	@Column
-	private BigDecimal valor;
+	private BigDecimal preco;
 	
 	@ManyToOne
 	@JoinColumn(name = "id_cliente")
