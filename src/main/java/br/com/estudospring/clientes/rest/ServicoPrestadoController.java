@@ -60,9 +60,6 @@ public class ServicoPrestadoController {
 	@GetMapping
 	public List<ServicoPrestado> pesquisar(
 			@RequestParam (value = "nome", required = false, defaultValue = "") String nome) {
-			//@RequestParam (value = "mes", required = false) Integer mes) {
-		
-//		return repository.findByNomeClienteAndMes("%" + nome + "%", mes);
 		return repository.findByNomeClienteAndMes("%" + nome + "%");
 	}
 
