@@ -6,7 +6,6 @@ import java.util.stream.Collectors;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -34,7 +33,7 @@ public class ApplicatonControllerAdvice {
 	@SuppressWarnings("unchecked")
 	@ExceptionHandler(ResponseStatusException.class)
 	public ResponseEntity handleResponseStatusException(ResponseStatusException ex) {
-		String mensagemErro = ex.getMessage();
+		String mensagemErro = ex.getReason();
 		HttpStatus codigoStatus = ex.getStatus();
 		ApiErrors apiErrors = new ApiErrors(mensagemErro);
 		

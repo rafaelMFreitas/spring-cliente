@@ -26,9 +26,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		.passwordEncoder(passwordEncoder());
 	}
 
-	public AuthenticationManager authenticationManager() throws Exception {
-		return super.authenticationManager();
-	}
+	@Override
+    @Bean
+    public AuthenticationManager authenticationManagerBean()
+        throws Exception {
+        return super.authenticationManagerBean();
+    }
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
